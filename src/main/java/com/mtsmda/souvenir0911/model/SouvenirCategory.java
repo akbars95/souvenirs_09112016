@@ -16,6 +16,14 @@ public class SouvenirCategory implements Serializable {
 
     }
 
+    public SouvenirCategory(Integer souvenirCategoryId) {
+        this.souvenirCategoryId = souvenirCategoryId;
+    }
+
+    public SouvenirCategory(String souvenirCategory) {
+        this.souvenirCategory = souvenirCategory;
+    }
+
     public SouvenirCategory(Integer souvenirCategoryId, String souvenirCategory) {
         this.souvenirCategoryId = souvenirCategoryId;
         this.souvenirCategory = souvenirCategory;

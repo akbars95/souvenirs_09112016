@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
  */
 public class SouvenirAudit implements Serializable {
 
-    private Integer souvenirAuditId;
     private Souvenir souvenir;
     private LocalDateTime createdDateTime;
     private LocalDateTime lastUpdatedDateTime;
@@ -17,19 +16,10 @@ public class SouvenirAudit implements Serializable {
 
     }
 
-    public SouvenirAudit(Integer souvenirAuditId, Souvenir souvenir, LocalDateTime createdDateTime, LocalDateTime lastUpdatedDateTime) {
-        this.souvenirAuditId = souvenirAuditId;
+    public SouvenirAudit(Souvenir souvenir, LocalDateTime createdDateTime, LocalDateTime lastUpdatedDateTime) {
         this.souvenir = souvenir;
         this.createdDateTime = createdDateTime;
         this.lastUpdatedDateTime = lastUpdatedDateTime;
-    }
-
-    public Integer getSouvenirAuditId() {
-        return souvenirAuditId;
-    }
-
-    public void setSouvenirAuditId(Integer souvenirAuditId) {
-        this.souvenirAuditId = souvenirAuditId;
     }
 
     public Souvenir getSouvenir() {

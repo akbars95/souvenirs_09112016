@@ -22,6 +22,20 @@ public class Souvenir implements Serializable{
 
     }
 
+    public Souvenir(Integer souvenirId) {
+        this.souvenirId = souvenirId;
+    }
+
+    public Souvenir(Integer souvenirId, SouvenirCategory souvenirCategory, String souvenirName, String souvenirDescription, Boolean souvenirVisibility, Double souvenirPrice, Integer souvenirCountDayToOrder) {
+        this.souvenirId = souvenirId;
+        this.souvenirCategory = souvenirCategory;
+        this.souvenirName = souvenirName;
+        this.souvenirDescription = souvenirDescription;
+        this.souvenirVisibility = souvenirVisibility;
+        this.souvenirPrice = souvenirPrice;
+        this.souvenirCountDayToOrder = souvenirCountDayToOrder;
+    }
+
     public Integer getSouvenirId() {
         return souvenirId;
     }
