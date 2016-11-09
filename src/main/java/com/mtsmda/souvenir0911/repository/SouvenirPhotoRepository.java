@@ -1,9 +1,12 @@
 package com.mtsmda.souvenir0911.repository;
 
+import com.mtsmda.souvenir0911.model.SouvenirPhoto;
+import com.mtsmda.spring.helper.StandardRepository;
+
 /**
  * Created by dminzat on 11/9/2016.
  */
-public interface SouvenirPhotoRepository {
+public interface SouvenirPhotoRepository extends StandardRepository<SouvenirPhoto> {
 
     String T_SOUVENIRS_PHOTO = "souvenirs_photo";
     String T_SOUVENIRS_PHOTO_F_SOUVENIR_PHOTO_ID = "souvenir_photo_id";
