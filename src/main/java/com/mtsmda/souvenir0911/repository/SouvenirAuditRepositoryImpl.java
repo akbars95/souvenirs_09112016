@@ -2,12 +2,14 @@ package com.mtsmda.souvenir0911.repository;
 
 import com.mtsmda.souvenir0911.model.SouvenirAudit;
 import com.mtsmda.spring.helper.response.CommonResponse;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * Created by MTSMDA on 09.11.2016.
  */
+@Repository("souvenirAuditRepositoryImpl")
 public class SouvenirAuditRepositoryImpl implements SouvenirAuditRepository{
 
     @Override
