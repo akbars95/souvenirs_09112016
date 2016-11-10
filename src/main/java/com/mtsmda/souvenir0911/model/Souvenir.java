@@ -107,4 +107,55 @@ public class Souvenir implements Serializable{
     public void setSouvenirPhotos(List<SouvenirPhoto> souvenirPhotos) {
         this.souvenirPhotos = souvenirPhotos;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Souvenir souvenir = (Souvenir) o;
+
+        if (souvenirId != null ? !souvenirId.equals(souvenir.souvenirId) : souvenir.souvenirId != null) return false;
+        if (souvenirCategory != null ? !souvenirCategory.equals(souvenir.souvenirCategory) : souvenir.souvenirCategory != null)
+            return false;
+        if (!souvenirName.equals(souvenir.souvenirName)) return false;
+        if (!souvenirDescription.equals(souvenir.souvenirDescription)) return false;
+        if (!souvenirVisibility.equals(souvenir.souvenirVisibility)) return false;
+        if (souvenirAudit != null ? !souvenirAudit.equals(souvenir.souvenirAudit) : souvenir.souvenirAudit != null)
+            return false;
+        if (!souvenirPrice.equals(souvenir.souvenirPrice)) return false;
+        if (!souvenirCountDayToOrder.equals(souvenir.souvenirCountDayToOrder)) return false;
+        return souvenirPhotos != null ? souvenirPhotos.equals(souvenir.souvenirPhotos) : souvenir.souvenirPhotos == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = souvenirId != null ? souvenirId.hashCode() : 0;
+        result = 31 * result + (souvenirCategory != null ? souvenirCategory.hashCode() : 0);
+        result = 31 * result + souvenirName.hashCode();
+        result = 31 * result + souvenirDescription.hashCode();
+        result = 31 * result + souvenirVisibility.hashCode();
+        result = 31 * result + (souvenirAudit != null ? souvenirAudit.hashCode() : 0);
+        result = 31 * result + souvenirPrice.hashCode();
+        result = 31 * result + souvenirCountDayToOrder.hashCode();
+        result = 31 * result + (souvenirPhotos != null ? souvenirPhotos.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Souvenir{" +
+                "souvenirId=" + souvenirId +
+                ", souvenirName='" + souvenirName + '\'' +
+                ", souvenirDescription='" + souvenirDescription + '\'' +
+                ", souvenirVisibility=" + souvenirVisibility +
+                ", souvenirAudit=" + souvenirAudit +
+                ", souvenirPrice=" + souvenirPrice +
+                ", souvenirCountDayToOrder=" + souvenirCountDayToOrder +
+                '}';
+    }
+
+
+
 }

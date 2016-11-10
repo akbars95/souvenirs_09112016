@@ -45,4 +45,34 @@ public class SouvenirAudit implements Serializable {
     public void setLastUpdatedDateTime(LocalDateTime lastUpdatedDateTime) {
         this.lastUpdatedDateTime = lastUpdatedDateTime;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SouvenirAudit that = (SouvenirAudit) o;
+
+        if (!souvenir.equals(that.souvenir)) return false;
+        if (!createdDateTime.equals(that.createdDateTime)) return false;
+        return lastUpdatedDateTime.equals(that.lastUpdatedDateTime);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = souvenir.hashCode();
+        result = 31 * result + createdDateTime.hashCode();
+        result = 31 * result + lastUpdatedDateTime.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "SouvenirAudit{" +
+                "souvenir=" + souvenir +
+                ", createdDateTime=" + createdDateTime +
+                ", lastUpdatedDateTime=" + lastUpdatedDateTime +
+                '}';
+    }
 }

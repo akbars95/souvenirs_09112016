@@ -54,4 +54,36 @@ public class SouvenirPhoto implements Serializable {
     public void setSouvenir(Souvenir souvenir) {
         this.souvenir = souvenir;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SouvenirPhoto that = (SouvenirPhoto) o;
+
+        if (!souvenirPhotoId.equals(that.souvenirPhotoId)) return false;
+        if (!souvenirPhotoPath.equals(that.souvenirPhotoPath)) return false;
+        if (!souvenirPhotoName.equals(that.souvenirPhotoName)) return false;
+        return souvenir != null ? souvenir.equals(that.souvenir) : that.souvenir == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = souvenirPhotoId.hashCode();
+        result = 31 * result + souvenirPhotoPath.hashCode();
+        result = 31 * result + souvenirPhotoName.hashCode();
+        result = 31 * result + (souvenir != null ? souvenir.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "SouvenirPhoto{" +
+                "souvenirPhotoId=" + souvenirPhotoId +
+                ", souvenirPhotoPath='" + souvenirPhotoPath + '\'' +
+                ", souvenirPhotoName='" + souvenirPhotoName + '\'' +
+                '}';
+    }
 }
