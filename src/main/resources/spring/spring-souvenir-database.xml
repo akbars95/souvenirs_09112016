@@ -7,7 +7,7 @@
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
-    <beans profile="production">
+    <!--<beans profile="production">-->
         <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
               destroy-method="close">
             <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
@@ -15,7 +15,7 @@ http://www.springframework.org/schema/jdbc http://www.springframework.org/schema
             <property name="username" value="${production.mysql.username}"/>
             <property name="password" value="${production.mysql.password}"/>
         </bean>
-    </beans>
+    <!--</beans>-->
 
     <!--<beans profile="testing">
         <jdbc:embedded-database id="dataSourceHSQL" type="HSQL">
@@ -32,7 +32,7 @@ http://www.springframework.org/schema/jdbc http://www.springframework.org/schema
         </bean>
     </beans>-->
 
-    <beans>
+    <!--<beans>-->
         <tx:annotation-driven transaction-manager="transactionManager"/>
         <bean id="transactionManager"
               class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -43,6 +43,6 @@ http://www.springframework.org/schema/jdbc http://www.springframework.org/schema
               class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
             <constructor-arg ref="dataSource"/>
         </bean>
-    </beans>
+    <!--</beans>-->
 
 </beans>
