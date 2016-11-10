@@ -10,7 +10,7 @@
     <parent>
         <groupId>com.mtsmda.workpiece.maven</groupId>
         <artifactId>common</artifactId>
-        <version>1.8.RELEASE.07112016</version>
+        <version>1.8.1.RELEASE.10112016</version>
     </parent>
 
     <name>souvenir09112016 Maven Webapp</name>
@@ -70,6 +70,7 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
@@ -87,6 +88,20 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
+        </dependency>
+
+        <!--tiles-->
+        <dependency>
+            <groupId>${org.apache.tiles.groupId}</groupId>
+            <artifactId>tiles-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${org.apache.tiles.groupId}</groupId>
+            <artifactId>tiles-jsp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${org.apache.tiles.groupId}</groupId>
+            <artifactId>tiles-api</artifactId>
         </dependency>
 
         <!-- json -->
@@ -151,6 +166,7 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+
         <dependency>
             <groupId>${org.springframework.groupId}</groupId>
             <artifactId>${spring.artifactId}-test</artifactId>
@@ -167,42 +183,6 @@
             <artifactId>spring-helper</artifactId>
             <version>1.1.2.RELEASE.09112016</version>
         </dependency>
-
     </dependencies>
 
-
-    <build>
-        <plugins>
-        </plugins>
-    </build>
-
-    <profiles>
-        <profile>
-            <id>jetty_run</id>
-            <activation>
-                <jdk>${java.version}</jdk>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.eclipse.jetty</groupId>
-                        <artifactId>jetty-maven-plugin</artifactId>
-                        <version>9.2.11.v20150529</version>
-                        <configuration>
-                            <scanIntervalSeconds>5</scanIntervalSeconds>
-                            <webApp>
-                                <!--http://localhost:8999/souvenir09112016/-->
-                                <contextPath>/${project.artifactId}</contextPath>
-                            </webApp>
-                            <httpConnector>
-                                <port>8999</port>
-                            </httpConnector>
-                            <stopPort>9898</stopPort>
-                            <stopKey>stop</stopKey>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>
