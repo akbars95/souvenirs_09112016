@@ -4,6 +4,7 @@ import com.mtsmda.helper.LocalDateTimeHelper;
 import com.mtsmda.helper.ObjectHelper;
 import com.mtsmda.souvenir0911.model.SouvenirAudit;
 import com.mtsmda.spring.helper.response.CommonResponse;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -17,52 +18,73 @@ import static com.mtsmda.helper.ExceptionMessageHelper.exceptionDescription;
 import static com.mtsmda.helper.ListHelper.getListWithData;
 import static com.mtsmda.helper.QueryCreatorHelper.insertGenerate;
 
+import static com.mtsmda.spring.helper.response.CommonResponse.*;
+
 /**
  * Created by MTSMDA on 09.11.2016.
  */
 @Repository("souvenirAuditRepositoryImpl")
-public class SouvenirAuditRepositoryImpl implements SouvenirAuditRepository{
+public class SouvenirAuditRepositoryImpl extends ParentRepository implements SouvenirAuditRepository{
 
-    private String messageForLogger;
-    private String query;
-
-    @Autowired
-    @Qualifier("namedParameterJdbcTemplate")
-    protected NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private static final Logger LOGGER = Logger.getLogger(SouvenirAuditRepositoryImpl.class);
 
     @Override
     public CommonResponse<Boolean> insert(SouvenirAudit tObject) {
         try {
-            if (ObjectHelper.objectIsNull(userRequest)) {
-                setMessageForLogger("userRequest " + MESSAGE_NULL_OBJECT);
+            if (ObjectHelper.objectIsNull(tObject)) {
+                setMessageForLogger("souvenir audit is null");
                 LOGGER.error(getMessageForLogger());
-                return new CommonResponse<>(false, REPOSITORY_INSERT, getMessageForLogger());
+                return new CommonResponse<>(false, REPOSITORY_ERROR, getMessageForLogger());
             }
-            setQuery(insertGenerate(T_USER_REQUESTS, getListWithData(T_USER_REQUESTS_F_USER_ID, T_USER_REQUESTS_F_REQUEST_DATE_TIME
-                    , T_USER_REQUESTS_F_REQUEST_IS_ACTIVE, T_USER_REQUESTS_F_REQUEST_STATUS)));
-            LOGGER.info(MESSAGE_LOGGER_QUERY + getQuery());
+            setQuery(insertGenerate(T_SOUVENIRS_AUDIT, getListWithData(T_SOUVENIRS_AUDIT_F_SOUVENIR_ID, T_SOUVENIRS_AUDIT_F_CREATED_DATETIME
+                    , T_SOUVENIRS_AUDIT_F_LAST_UPDATE_DATETIME)));
+            LOGGER.info("query - " + getQuery());
             Map<String, Object> params = new LinkedHashMap<>();
-            params.put(T_USER_REQUESTS_F_USER_ID, userRequest.getUser().getUserId());
-            params.put(T_USER_REQUESTS_F_REQUEST_DATE_TIME, LocalDateTimeHelper.localDateTimeMySqlFormat(userRequest.getRequestDateTime()));
-            params.put(T_USER_REQUESTS_F_REQUEST_IS_ACTIVE, userRequest.getRequestIsActive());
-            params.put(T_USER_REQUESTS_F_REQUEST_STATUS, userRequest.getStatus().getStatusId());
+            params.put(T_SOUVENIRS_AUDIT_F_SOUVENIR_ID, tObject.getSouvenir().getSouvenirId());
+            params.put(T_SOUVENIRS_AUDIT_F_CREATED_DATETIME, LocalDateTimeHelper.localDateTimeMySqlFormat(tObject.getCreatedDateTime()));
+            params.put(T_SOUVENIRS_AUDIT_F_LAST_UPDATE_DATETIME, LocalDateTimeHelper.localDateTimeMySqlFormat(tObject.getLastUpdatedDateTime()));
             int update = namedParameterJdbcTemplate.update(getQuery(), params);
             if (update <= 0) {
-                setMessageForLogger(MESSAGE_CANNOT_INSERT);
+                setMessageForLogger("error with insert!");
                 LOGGER.error(getMessageForLogger());
-                return new CommonResponse<>(false, REPOSITORY_INSERT, getMessageForLogger());
+                return new CommonResponse<>(false, REPOSITORY_ERROR, getMessageForLogger());
             }
         } catch (Exception e) {
             setMessageForLogger(exceptionDescription(e));
             LOGGER.error(getMessageForLogger());
-            return new CommonResponse<>(false, REPOSITORY_INSERT, getMessageForLogger());
+            return new CommonResponse<>(false, REPOSITORY_ERROR, getMessageForLogger());
         }
         return new CommonResponse<>(true, REPOSITORY_SUCCESS, null);
     }
 
     @Override
     public CommonResponse<Boolean> update(SouvenirAudit tObject) {
-        return null;
+        /*try {
+            if (ObjectHelper.objectIsNull(tObject)) {
+                setMessageForLogger("souvenir audit is null");
+                LOGGER.error(getMessageForLogger());
+                return new CommonResponse<>(false, REPOSITORY_ERROR, getMessageForLogger());
+            }
+            setQuery(insertGenerate(T_SOUVENIRS_AUDIT, getListWithData(T_SOUVENIRS_AUDIT_F_SOUVENIR_ID, T_SOUVENIRS_AUDIT_F_CREATED_DATETIME
+                    , T_SOUVENIRS_AUDIT_F_LAST_UPDATE_DATETIME)));
+            LOGGER.info("query - " + getQuery());
+            Map<String, Object> params = new LinkedHashMap<>();
+            params.put(T_SOUVENIRS_AUDIT_F_SOUVENIR_ID, tObject.getSouvenir().getSouvenirId());
+            params.put(T_SOUVENIRS_AUDIT_F_CREATED_DATETIME, LocalDateTimeHelper.localDateTimeMySqlFormat(tObject.getCreatedDateTime()));
+            params.put(T_SOUVENIRS_AUDIT_F_LAST_UPDATE_DATETIME, LocalDateTimeHelper.localDateTimeMySqlFormat(tObject.getLastUpdatedDateTime()));
+            int update = namedParameterJdbcTemplate.update(getQuery(), params);
+            if (update <= 0) {
+                setMessageForLogger("error with insert!");
+                LOGGER.error(getMessageForLogger());
+                return new CommonResponse<>(false, REPOSITORY_ERROR, getMessageForLogger());
+            }
+        } catch (Exception e) {
+            setMessageForLogger(exceptionDescription(e));
+            LOGGER.error(getMessageForLogger());
+            return new CommonResponse<>(false, REPOSITORY_ERROR, getMessageForLogger());
+        }
+        return new CommonResponse<>(true, REPOSITORY_SUCCESS, null);*/
+        throw new UnsupportedOperationException("Update Operation is unsupport!");
     }
 
     @Override
