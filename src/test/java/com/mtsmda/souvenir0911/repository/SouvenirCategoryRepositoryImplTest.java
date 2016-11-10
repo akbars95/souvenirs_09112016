@@ -2,23 +2,16 @@ package com.mtsmda.souvenir0911.repository;
 
 import com.mtsmda.souvenir0911.ParentTest;
 import com.mtsmda.souvenir0911.model.SouvenirCategory;
-import com.mtsmda.spring.helper.Run;
 import com.mtsmda.spring.helper.response.CommonResponse;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Profile;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-
 
 import java.util.List;
 
+import static com.mtsmda.spring.helper.response.CommonResponse.REPOSITORY_ERROR;
 import static org.junit.Assert.*;
 /**
  * Created by dminzat on 11/10/2016.
@@ -43,19 +36,16 @@ public class SouvenirCategoryRepositoryImplTest extends ParentTest{
         assertNotNull(insert);
         assertTrue(insert.getObject());
         assertEquals(insert.getCode(), CommonResponse.REPOSITORY_SUCCESS);
-        try{
-            insert = souvenirCategoryRepository.insert(souvenirCategory);
-        }
-        catch (DuplicateKeyException e){
-            assertNotNull(e.getMessage());
-        }
 
-        try{
-            insert = souvenirCategoryRepository.insert(null);
-        }
-        catch (RuntimeException e){
-            assertNotNull(e.getMessage());
-        }
+        insert = souvenirCategoryRepository.insert(souvenirCategory);
+        assertFalse(insert.getObject());
+        assertNotNull(insert.getMessageErrorDescription());
+        assertEquals(insert.getCode(), REPOSITORY_ERROR);
+
+        insert = souvenirCategoryRepository.insert(null);
+        assertFalse(insert.getObject());
+        assertNotNull(insert.getMessageErrorDescription());
+        assertEquals(insert.getCode(), REPOSITORY_ERROR);
     }
 
     @Test

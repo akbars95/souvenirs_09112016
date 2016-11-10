@@ -31,97 +31,51 @@ public class SouvenirCategoryRepositoryImpl extends ParentRepository implements 
 
     @Override
     public CommonResponse<Boolean> insert(SouvenirCategory tObject) {
-        try {
-            if (ObjectHelper.objectIsNull(tObject)) {
-                setMessageForLogger("souvenir category is null");
-                LOGGER.error(getMessageForLogger());
-                return new CommonResponse<>(false, REPOSITORY_ERROR, getMessageForLogger());
-            }
-            setQuery(insertGenerate(T_SOUVENIR_CATEGORIES, getListWithData(T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY)));
-            LOGGER.info("query - " + getQuery());
-            Map<String, Object> params = new LinkedHashMap<>();
-            params.put(T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY, tObject.getSouvenirCategory());
-            int update = namedParameterJdbcTemplate.update(getQuery(), params);
-            if (update <= 0) {
-                setMessageForLogger("error with insert!");
-                LOGGER.error(getMessageForLogger());
-                return new CommonResponse<>(false, REPOSITORY_ERROR, getMessageForLogger());
-            }
-        } catch (Exception e) {
-            setMessageForLogger(exceptionDescription(e));
-            LOGGER.error(getMessageForLogger());
-            return new CommonResponse<>(false, REPOSITORY_ERROR, getMessageForLogger());
+        CommonResponse<Boolean> booleanCommonResponse = checkInputObject(tObject, LOGGER);
+        if (!booleanCommonResponse.getObject()) {
+            return booleanCommonResponse;
         }
-        return new CommonResponse<>(true, REPOSITORY_SUCCESS, null);
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put(T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY, tObject.getSouvenirCategory());
+        return insert(insertGenerate(T_SOUVENIR_CATEGORIES, getListWithData(T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY)), params, LOGGER);
     }
 
     @Override
     public CommonResponse<Boolean> update(SouvenirCategory tObject) {
-        try {
-            if (ObjectHelper.objectIsNull(tObject)) {
-                setMessageForLogger("souvenir category is null");
-                LOGGER.error(getMessageForLogger());
-                return new CommonResponse<>(false, REPOSITORY_ERROR, getMessageForLogger());
-            }
-            setQuery(updateGenerate(T_SOUVENIR_CATEGORIES, getListWithData(T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY),
-                    T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY_ID));
-            LOGGER.info("query - " + getQuery());
-            Map<String, Object> params = new LinkedHashMap<>();
-            params.put(T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY, tObject.getSouvenirCategory());
-            params.put(T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY_ID, tObject.getSouvenirCategoryId());
-            int update = namedParameterJdbcTemplate.update(getQuery(), params);
-            if (update <= 0) {
-                setMessageForLogger("error with update!");
-                LOGGER.error(getMessageForLogger());
-                return new CommonResponse<>(false, REPOSITORY_ERROR, getMessageForLogger());
-            }
-        } catch (Exception e) {
-            setMessageForLogger(exceptionDescription(e));
-            LOGGER.error(getMessageForLogger());
-            return new CommonResponse<>(false, REPOSITORY_ERROR, getMessageForLogger());
+        CommonResponse<Boolean> booleanCommonResponse = checkInputObject(tObject, LOGGER);
+        if (!booleanCommonResponse.getObject()) {
+            return booleanCommonResponse;
         }
-        return new CommonResponse<>(true, REPOSITORY_SUCCESS, null);
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put(T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY, tObject.getSouvenirCategory());
+        params.put(T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY_ID, tObject.getSouvenirCategoryId());
+        return update(updateGenerate(T_SOUVENIR_CATEGORIES, getListWithData(T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY),
+                T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY_ID), params, LOGGER);
     }
 
     @Override
     public CommonResponse<Boolean> delete(SouvenirCategory tObject) {
-        try {
-            if (ObjectHelper.objectIsNull(tObject)) {
-                setMessageForLogger("souvenir category is null");
-                LOGGER.error(getMessageForLogger());
-                return new CommonResponse<>(false, REPOSITORY_ERROR, getMessageForLogger());
-            }
-            setQuery(deleteGenerate(T_SOUVENIR_CATEGORIES, T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY_ID));
-            LOGGER.info("query - " + getQuery());
-            Map<String, Object> params = new LinkedHashMap<>();
-            params.put(T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY_ID, tObject.getSouvenirCategoryId());
-            int update = namedParameterJdbcTemplate.update(getQuery(), params);
-            if (update <= 0) {
-                setMessageForLogger("error with delete!");
-                LOGGER.error(getMessageForLogger());
-                return new CommonResponse<>(false, REPOSITORY_ERROR, getMessageForLogger());
-            }
-        } catch (Exception e) {
-            setMessageForLogger(exceptionDescription(e));
-            LOGGER.error(getMessageForLogger());
-            return new CommonResponse<>(false, REPOSITORY_ERROR, getMessageForLogger());
+        CommonResponse<Boolean> booleanCommonResponse = checkInputObject(tObject, LOGGER);
+        if (!booleanCommonResponse.getObject()) {
+            return booleanCommonResponse;
         }
-        return new CommonResponse<>(true, REPOSITORY_SUCCESS, null);
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put(T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY_ID, tObject.getSouvenirCategoryId());
+        return delete(deleteGenerate(T_SOUVENIR_CATEGORIES, T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY_ID), params, LOGGER);
     }
 
     @Override
     public CommonResponse<SouvenirCategory> getById(Integer id) {
+        CommonResponse<Boolean> booleanCommonResponse = checkInputObject(id, LOGGER);
+        if (booleanCommonResponse.getCode().equals(REPOSITORY_ERROR)) {
+            return new CommonResponse<>(null, REPOSITORY_ERROR, booleanCommonResponse.getMessageErrorDescription());
+        }
         SouvenirCategory souvenirCategory = null;
         try {
-            if (ObjectHelper.objectIsNull(id)) {
-                setMessageForLogger("id is null");
-                LOGGER.error(getMessageForLogger());
-                return new CommonResponse<>(null, REPOSITORY_ERROR, getMessageForLogger());
-            }
             setQuery(selectById(T_SOUVENIR_CATEGORIES, T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY_ID));
-            LOGGER.info("query - " + getQuery());
             Map<String, Object> params = new LinkedHashMap<>();
             params.put(T_SOUVENIR_CATEGORIES_F_SOUVENIR_CATEGORY_ID, id);
+            LOGGER.info("query - " + getQuery());
             souvenirCategory = namedParameterJdbcTemplate.queryForObject(getQuery(), params, new SouvenirCategoryRowMapper());
             if (ObjectHelper.objectIsNull(souvenirCategory)) {
                 setMessageForLogger("return souvenirCategory is null!");
@@ -140,10 +94,9 @@ public class SouvenirCategoryRepositoryImpl extends ParentRepository implements 
     public CommonResponse<List<SouvenirCategory>> getAll() {
         List<SouvenirCategory> souvenirCategories = null;
         try {
-            Map<String, Object> params = new LinkedHashMap<>();
             setQuery(selectAll(T_SOUVENIR_CATEGORIES));
             LOGGER.info("query - " + getQuery());
-            souvenirCategories = namedParameterJdbcTemplate.query(getQuery(), params, new SouvenirCategoryRowMapper());
+            souvenirCategories = namedParameterJdbcTemplate.query(getQuery(), new LinkedHashMap<>(), new SouvenirCategoryRowMapper());
             if (ListHelper.listIsNullOrEmpty(souvenirCategories)) {
                 setMessageForLogger("return souvenirCategories is null!");
                 LOGGER.error(getMessageForLogger());

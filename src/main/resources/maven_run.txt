@@ -1,0 +1,5 @@
+clean install
+clean install -DskipTests
+clean install jetty:run P = jetty_run
+clean install -DskipTests jetty:run P = jetty_run
+jetty:run P = jetty_run
