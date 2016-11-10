@@ -6,6 +6,8 @@ CREATE DATABASE IF NOT EXISTS souvenir0911 CHARACTER SET utf8 COLLATE utf8_bin;
 CREATE USER 'souvenir0911'@'localhost' IDENTIFIED BY 'souvenir0911';
 GRANT ALL PRIVILEGES ON souvenir0911. * TO 'souvenir0911'@'localhost';
 
+use souvenir0911;
+
 /*tables*/
 CREATE TABLE `souvenir_categories` (
   `souvenir_category_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -46,3 +48,21 @@ CREATE TABLE `souvenirs_audit` (
   PRIMARY KEY (`souvenir_id`),
   CONSTRAINT `souvenirs_audit_souvenir_id_fk` FOREIGN KEY (`souvenir_id`) REFERENCES `souvenirs` (`souvenir_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+/*triggers*/
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` TRIGGER `souvenir0911`.`souvenirs_AFTER_INSERT` AFTER INSERT ON `souvenirs` FOR EACH ROW
+BEGIN
+	insert into souvenirs_audit (souvenir_id, created_datetime, last_update_datetime)
+    values(NEW.souvenir_id, current_timestamp(), current_timestamp());
+  END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` TRIGGER `souvenir0911`.`souvenirs_AFTER_UPDATE` AFTER UPDATE ON `souvenirs` FOR EACH ROW
+BEGIN
+	update souvenirs_audit set last_update_datetime = current_timestamp()
+    where souvenir_id = NEW.souvenir_id;
+  END$$
+DELIMITER ;
