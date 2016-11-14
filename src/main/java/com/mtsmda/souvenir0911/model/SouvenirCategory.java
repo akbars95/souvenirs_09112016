@@ -1,12 +1,14 @@
 package com.mtsmda.souvenir0911.model;
 
+import com.mtsmda.manipulation.CloneableI;
+
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by dminzat on 11/9/2016.
  */
-public class SouvenirCategory implements Serializable {
+public class SouvenirCategory implements Serializable, CloneableI<SouvenirCategory> {
 
     private Integer souvenirCategoryId;
     private String souvenirCategory;
@@ -27,6 +29,12 @@ public class SouvenirCategory implements Serializable {
     public SouvenirCategory(Integer souvenirCategoryId, String souvenirCategory) {
         this.souvenirCategoryId = souvenirCategoryId;
         this.souvenirCategory = souvenirCategory;
+    }
+
+    public SouvenirCategory(Integer souvenirCategoryId, String souvenirCategory, List<Souvenir> souvenirs) {
+        this.souvenirCategoryId = souvenirCategoryId;
+        this.souvenirCategory = souvenirCategory;
+        this.souvenirs = souvenirs;
     }
 
     public Integer getSouvenirCategoryId() {
@@ -80,5 +88,10 @@ public class SouvenirCategory implements Serializable {
                 "souvenirCategoryId=" + souvenirCategoryId +
                 ", souvenirCategory='" + souvenirCategory + '\'' +
                 '}';
+    }
+
+    @Override
+    public SouvenirCategory clone() {
+        return new SouvenirCategory(this.getSouvenirCategoryId(), this.getSouvenirCategory(), this.getSouvenirs());
     }
 }

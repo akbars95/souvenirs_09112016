@@ -1,12 +1,14 @@
 package com.mtsmda.souvenir0911.model;
 
+import com.mtsmda.manipulation.CloneableI;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * Created by dminzat on 11/9/2016.
  */
-public class SouvenirAudit implements Serializable {
+public class SouvenirAudit implements Serializable, CloneableI<SouvenirAudit> {
 
     private Souvenir souvenir;
     private LocalDateTime createdDateTime;
@@ -74,5 +76,10 @@ public class SouvenirAudit implements Serializable {
                 ", createdDateTime=" + createdDateTime +
                 ", lastUpdatedDateTime=" + lastUpdatedDateTime +
                 '}';
+    }
+
+    @Override
+    public SouvenirAudit clone() {
+        return new SouvenirAudit(this.getSouvenir(), this.getCreatedDateTime(), this.getLastUpdatedDateTime());
     }
 }

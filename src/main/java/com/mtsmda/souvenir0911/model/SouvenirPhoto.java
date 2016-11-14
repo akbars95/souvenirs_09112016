@@ -1,11 +1,13 @@
 package com.mtsmda.souvenir0911.model;
 
+import com.mtsmda.manipulation.CloneableI;
+
 import java.io.Serializable;
 
 /**
  * Created by dminzat on 11/9/2016.
  */
-public class SouvenirPhoto implements Serializable {
+public class SouvenirPhoto implements Serializable, CloneableI<SouvenirPhoto> {
 
     private Integer souvenirPhotoId;
     private String souvenirPhotoPath;
@@ -85,5 +87,10 @@ public class SouvenirPhoto implements Serializable {
                 ", souvenirPhotoPath='" + souvenirPhotoPath + '\'' +
                 ", souvenirPhotoName='" + souvenirPhotoName + '\'' +
                 '}';
+    }
+
+    @Override
+    public SouvenirPhoto clone() {
+        return new SouvenirPhoto(this.getSouvenirPhotoId(), this.getSouvenirPhotoPath(), this.getSouvenirPhotoName(), this.getSouvenir());
     }
 }
